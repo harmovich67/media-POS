@@ -103,6 +103,35 @@ export function POSProvider({ children }) {
   // Audio mute setting
   const [soundEnabled, setSoundEnabled] = useState(true);
 
+  // Auto-initialize from client preset config.json if available
+  useEffect(() => {
+    if (!localStorage.getItem('pos_initialized')) {
+      fetch('/config.json')
+        .then((res) => (res.ok ? res.json() : null))
+        .then((cfg) => {
+          if (cfg) {
+            if (cfg.mode) {
+              setActiveMode(cfg.mode);
+              localStorage.setItem('pos_mode', cfg.mode);
+            }
+            if (cfg.systemScope) {
+              setSystemScope(cfg.systemScope);
+              localStorage.setItem('pos_system_scope', cfg.systemScope);
+            }
+            if (cfg.storeInfo) {
+              setStoreInfo((prev) => {
+                const updated = { ...prev, ...cfg.storeInfo };
+                localStorage.setItem('pos_store_info', JSON.stringify(updated));
+                return updated;
+              });
+            }
+            localStorage.setItem('pos_initialized', 'true');
+          }
+        })
+        .catch(() => {});
+    }
+  }, []);
+
   // Sync Current User Role & Scope
   useEffect(() => {
     if (currentUser) {

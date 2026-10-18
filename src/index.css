@@ -1,12 +1,22 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: 'Cairo', sans-serif;
+  --font-arabic: 'Cairo', sans-serif;
+}
+
 /* Custom Global Design Tokens & Typography */
 :root {
-  --font-arabic: 'Cairo', 'Tajawal', 'Readex Pro', sans-serif;
+  --font-arabic: 'Cairo', sans-serif;
+  font-family: 'Cairo', sans-serif;
+}
+
+*, *::before, *::after {
+  font-family: 'Cairo', sans-serif !important;
 }
 
 body {
-  font-family: var(--font-arabic);
+  font-family: 'Cairo', sans-serif !important;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
