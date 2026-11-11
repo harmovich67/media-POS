@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: 'Cairo', sans-serif;
   --font-arabic: 'Cairo', sans-serif;
+  --breakpoint-xs: 420px;
 }
 
 /* Custom Global Design Tokens & Typography */
@@ -11,15 +14,21 @@
   font-family: 'Cairo', sans-serif;
 }
 
-*, *::before, *::after {
-  font-family: 'Cairo', sans-serif !important;
-}
-
 body {
-  font-family: 'Cairo', sans-serif !important;
+  font-family: 'Cairo', sans-serif;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
+}
+
+input,
+textarea,
+select {
+  user-select: text;
+}
+
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 /* Custom Scrollbars */
@@ -28,67 +37,261 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
+  background: rgba(148, 163, 184, 0.12);
+}
+.dark ::-webkit-scrollbar-track {
   background: rgba(15, 23, 42, 0.6);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(51, 65, 85, 0.8);
+  background: rgba(148, 163, 184, 0.5);
   border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.85);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(16, 185, 129, 0.8);
 }
 
-/* Glassmorphism Cards */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.light .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+/* Safe area helper for notched phones */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Glassmorphism Cards & Panels */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  box-shadow: 0 8px 30px -12px rgba(15, 23, 42, 0.12);
+}
+
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 35px -12px rgba(0, 0, 0, 0.55);
 }
 
 .glass-card {
-  background: rgba(30, 41, 59, 0.6);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 6px 20px -8px rgba(15, 23, 42, 0.08);
 }
 
-.light .glass-card {
-  background: rgba(248, 250, 252, 0.9);
-  border: 1px solid rgba(226, 232, 240, 0.9);
+.dark .glass-card {
+  background: rgba(15, 23, 42, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.45);
+}
+
+/* Distinctive Product Card Visual Showcase Frame */
+.product-card-stage {
+  position: relative;
+  border-radius: 1.15rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.product-card-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  pointer-events: none;
+}
+
+.dark .product-card-stage::after {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Hover Lift */
+.hover-lift {
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+@media (hover: hover) {
+  .hover-lift:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.hover-lift:active {
+  transform: scale(0.985);
 }
 
 /* Glow Effects */
 .glow-emerald {
   box-shadow: 0 0 20px -5px rgba(16, 185, 129, 0.4);
 }
-
 .glow-amber {
   box-shadow: 0 0 20px -5px rgba(245, 158, 11, 0.4);
 }
-
 .glow-blue {
   box-shadow: 0 0 20px -5px rgba(59, 130, 246, 0.4);
 }
 
-/* Pulse Glow */
+/* Animations */
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.8; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.03); }
+  0%, 100% { opacity: 0.88; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
 }
 
 .animate-pulse-glow {
   animation: pulseGlow 2s infinite ease-in-out;
 }
 
+@keyframes modalBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalPopIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-modal-backdrop {
+  animation: modalBackdropIn 0.18s ease-out both;
+}
+
+.animate-modal-pop {
+  animation: modalPopIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-toast-in {
+  animation: toastSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Light Mode Adaptive Helpers for Legacy Dark Utility Classes Inside Panels */
+html.light .glass-panel .text-white,
+html.light .glass-card .text-white,
+html.light main .text-white {
+  color: #0f172a;
+}
+
+/* Keep white text inside solid/gradient colored buttons & badges in light mode */
+html.light button[class*="from-emerald-"] .text-white,
+html.light button[class*="from-emerald-"].text-white,
+html.light button[class*="from-cyan-"] .text-white,
+html.light button[class*="from-cyan-"].text-white,
+html.light button[class*="from-purple-"] .text-white,
+html.light button[class*="from-purple-"].text-white,
+html.light button[class*="from-rose-"] .text-white,
+html.light button[class*="from-rose-"].text-white,
+html.light button[class*="bg-emerald-6"] .text-white,
+html.light button[class*="bg-emerald-6"].text-white,
+html.light button[class*="bg-cyan-6"].text-white,
+html.light button[class*="bg-rose-6"].text-white,
+html.light .keep-white,
+html.light .keep-white * {
+  color: #ffffff !important;
+}
+
+/* Light mode surface adaptation */
+html.light .bg-slate-950,
+html.light .bg-slate-950\/95,
+html.light .bg-slate-950\/90,
+html.light .bg-slate-950\/60 {
+  background-color: #f1f5f9;
+}
+
+html.light .bg-slate-900,
+html.light .bg-slate-900\/90,
+html.light .bg-slate-900\/80,
+html.light .bg-slate-900\/70,
+html.light .bg-slate-900\/60 {
+  background-color: #ffffff;
+}
+
+html.light .bg-slate-800,
+html.light .bg-slate-800\/80,
+html.light .bg-slate-800\/60 {
+  background-color: #e2e8f0;
+}
+
+html.light .border-slate-800,
+html.light .border-slate-800\/80,
+html.light .border-slate-800\/60,
+html.light .border-slate-700,
+html.light .border-slate-700\/80,
+html.light .border-slate-700\/60 {
+  border-color: #cbd5e1;
+}
+
+html.light .text-slate-200 {
+  color: #1e293b;
+}
+
+html.light .text-slate-300 {
+  color: #334155;
+}
+
+html.light .text-slate-400 {
+  color: #475569;
+}
+
+html.light .text-slate-500 {
+  color: #64748b;
+}
+
+html.light .placeholder-slate-400::placeholder,
+html.light .placeholder-slate-500::placeholder {
+  color: #94a3b8;
+}
+
+/* Keep modal overlays dark frosted */
+html.light .fixed.inset-0.bg-slate-950\/85,
+html.light .fixed.inset-0.bg-slate-950\/80,
+html.light .fixed.inset-0.bg-slate-950\/90,
+html.light .fixed.inset-0.bg-slate-950\/95 {
+  background-color: rgba(15, 23, 42, 0.55);
+}
+
+/* Light mode accent contrast boost so cyan/emerald/amber badges read crisply on white */
+html.light .text-emerald-400,
+html.light .text-emerald-300 {
+  color: #047857;
+}
+html.light .text-cyan-400,
+html.light .text-cyan-300,
+html.light .text-cyan-300\/90,
+html.light .text-cyan-300\/80 {
+  color: #0e7490;
+}
+html.light .text-amber-400,
+html.light .text-amber-300 {
+  color: #b45309;
+}
+html.light .text-purple-400,
+html.light .text-purple-300 {
+  color: #6d28d9;
+}
+html.light .text-rose-400,
+html.light .text-rose-300 {
+  color: #be123c;
+}
+
 /* Print thermal receipt & reports styling */
 @media print {
   @page {
-    margin: 0;
+    margin: 6mm;
     size: auto;
   }
   html, body {
@@ -101,8 +304,15 @@ body {
     visibility: hidden !important;
   }
   #thermal-receipt-printable,
-  #thermal-receipt-printable * {
+  #thermal-receipt-printable *,
+  #report-printable,
+  #report-printable * {
     visibility: visible !important;
+  }
+  body[data-print-mode="receipt"] #report-printable,
+  body[data-print-mode="receipt"] #report-printable * {
+    visibility: hidden !important;
+    display: none !important;
   }
   #thermal-receipt-printable {
     position: absolute !important;
@@ -121,5 +331,21 @@ body {
     background: #ffffff !important;
     box-shadow: none !important;
     border: none !important;
+    z-index: 99999 !important;
+  }
+  #report-printable {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 16px !important;
+    font-family: 'Cairo', sans-serif !important;
+    color: #000000 !important;
+    background: #ffffff !important;
+    z-index: 99999 !important;
   }
 }
