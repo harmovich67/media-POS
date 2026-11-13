@@ -179,113 +179,280 @@ select {
   animation: toastSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Light Mode Adaptive Helpers for Legacy Dark Utility Classes Inside Panels */
+/* =========================================================================
+   Light mode layer
+   -------------------------------------------------------------------------
+   The UI was authored dark-first (bg-slate-900, text-white, border-slate-800 ...).
+   In light mode (html.light) every dark-first utility is remapped here to a
+   light equivalent. This block is un-layered, so it wins over Tailwind's
+   layered utilities (including their hover/focus variants, which therefore
+   get explicit rules below).
+
+   Opt-outs:
+     .keep-dark   keep a dark surface (e.g. badges floating over photos)
+     .keep-white  keep white text (e.g. solid coloured buttons)
+   ========================================================================= */
+
+/* ---- Text ------------------------------------------------------------- */
 html.light .glass-panel .text-white,
 html.light .glass-card .text-white,
 html.light main .text-white {
   color: #0f172a;
 }
 
-/* Keep white text inside solid/gradient colored buttons & badges in light mode */
-html.light button[class*="from-emerald-"] .text-white,
-html.light button[class*="from-emerald-"].text-white,
-html.light button[class*="from-cyan-"] .text-white,
-html.light button[class*="from-cyan-"].text-white,
-html.light button[class*="from-purple-"] .text-white,
-html.light button[class*="from-purple-"].text-white,
-html.light button[class*="from-rose-"] .text-white,
-html.light button[class*="from-rose-"].text-white,
-html.light button[class*="bg-emerald-6"] .text-white,
-html.light button[class*="bg-emerald-6"].text-white,
-html.light button[class*="bg-cyan-6"].text-white,
-html.light button[class*="bg-rose-6"].text-white,
-html.light .keep-white,
-html.light .keep-white * {
-  color: #ffffff !important;
+html.light .hover\:text-white:hover {
+  color: #0f172a;
+}
+html.light .hover\:bg-rose-500:hover.hover\:text-white:hover {
+  color: #ffffff;
 }
 
-/* Light mode surface adaptation */
-html.light .bg-slate-950,
-html.light .bg-slate-950\/95,
-html.light .bg-slate-950\/90,
-html.light .bg-slate-950\/60 {
-  background-color: #f1f5f9;
-}
-
-html.light .bg-slate-900,
-html.light .bg-slate-900\/90,
-html.light .bg-slate-900\/80,
-html.light .bg-slate-900\/70,
-html.light .bg-slate-900\/60 {
-  background-color: #ffffff;
-}
-
-html.light .bg-slate-800,
-html.light .bg-slate-800\/80,
-html.light .bg-slate-800\/60 {
-  background-color: #e2e8f0;
-}
-
-html.light .border-slate-800,
-html.light .border-slate-800\/80,
-html.light .border-slate-800\/60,
-html.light .border-slate-700,
-html.light .border-slate-700\/80,
-html.light .border-slate-700\/60 {
-  border-color: #cbd5e1;
-}
-
-html.light .text-slate-200 {
-  color: #1e293b;
-}
-
-html.light .text-slate-300 {
-  color: #334155;
-}
-
-html.light .text-slate-400 {
-  color: #475569;
-}
-
-html.light .text-slate-500 {
-  color: #64748b;
-}
+html.light .text-slate-100 { color: #0f172a; }
+html.light .text-slate-200,
+html.light .hover\:text-slate-200:hover { color: #1e293b; }
+html.light .text-slate-300 { color: #334155; }
+html.light .text-slate-400 { color: #475569; }
+html.light .text-slate-500 { color: #64748b; }
+html.light .text-slate-600 { color: #94a3b8; }
 
 html.light .placeholder-slate-400::placeholder,
 html.light .placeholder-slate-500::placeholder {
   color: #94a3b8;
 }
 
-/* Keep modal overlays dark frosted */
-html.light .fixed.inset-0.bg-slate-950\/85,
-html.light .fixed.inset-0.bg-slate-950\/80,
-html.light .fixed.inset-0.bg-slate-950\/90,
-html.light .fixed.inset-0.bg-slate-950\/95 {
+/* Keep white text on solid / gradient coloured surfaces */
+html.light :is(
+  [class~="bg-emerald-500"], [class~="bg-emerald-600"], [class~="bg-emerald-700"],
+  [class~="from-emerald-500"], [class~="from-emerald-600"], [class~="bg-cyan-500"],
+  [class~="bg-cyan-600"], [class~="bg-cyan-700"], [class~="from-cyan-500"],
+  [class~="from-cyan-600"], [class~="bg-teal-500"], [class~="bg-teal-600"],
+  [class~="bg-teal-700"], [class~="from-teal-500"], [class~="from-teal-600"],
+  [class~="bg-purple-500"], [class~="bg-purple-600"], [class~="bg-purple-700"],
+  [class~="from-purple-500"], [class~="from-purple-600"], [class~="bg-indigo-500"],
+  [class~="bg-indigo-600"], [class~="bg-indigo-700"], [class~="from-indigo-500"],
+  [class~="from-indigo-600"], [class~="bg-rose-500"], [class~="bg-rose-600"],
+  [class~="bg-rose-700"], [class~="from-rose-500"], [class~="from-rose-600"],
+  [class~="bg-red-500"], [class~="bg-red-600"], [class~="bg-red-700"], [class~="from-red-500"],
+  [class~="from-red-600"], [class~="bg-blue-500"], [class~="bg-blue-600"], [class~="bg-blue-700"],
+  [class~="from-blue-500"], [class~="from-blue-600"], [class~="bg-sky-500"],
+  [class~="bg-sky-600"], [class~="bg-sky-700"], [class~="from-sky-500"], [class~="from-sky-600"],
+  [class~="bg-orange-500"], [class~="bg-orange-600"], [class~="bg-orange-700"],
+  [class~="from-orange-500"], [class~="from-orange-600"], [class~="bg-amber-500"],
+  [class~="bg-amber-600"], [class~="bg-amber-700"], [class~="from-amber-500"],
+  [class~="from-amber-600"]
+) {
+  &.text-white,
+  & .text-white {
+    color: #ffffff !important;
+  }
+}
+
+html.light .keep-white,
+html.light .keep-white * {
+  color: #ffffff !important;
+}
+
+/* Accent colours: the 300/400 shades are tuned for dark backgrounds */
+html.light .text-emerald-400, html.light .text-emerald-400\/90, html.light
+.text-emerald-400\/80, html.light .text-emerald-400\/70, html.light .text-emerald-300,
+html.light .text-emerald-300\/90, html.light .text-emerald-300\/80, html.light
+.text-emerald-300\/70, html.light .hover\:text-emerald-400:hover, html.light
+.hover\:text-emerald-300:hover {
+  color: #047857;
+}
+html.light .text-emerald-200, html.light .text-emerald-200\/90, html.light
+.text-emerald-200\/80, html.light .text-emerald-200\/70, html.light .text-emerald-100,
+html.light .text-emerald-100\/90, html.light .text-emerald-100\/80, html.light
+.text-emerald-100\/70, html.light .hover\:text-emerald-200:hover, html.light
+.hover\:text-emerald-100:hover {
+  color: #065f46;
+}
+html.light .text-cyan-400, html.light .text-cyan-400\/90, html.light .text-cyan-400\/80,
+html.light .text-cyan-400\/70, html.light .text-cyan-300, html.light .text-cyan-300\/90,
+html.light .text-cyan-300\/80, html.light .text-cyan-300\/70, html.light
+.hover\:text-cyan-400:hover, html.light .hover\:text-cyan-300:hover {
+  color: #0e7490;
+}
+html.light .text-cyan-200, html.light .text-cyan-200\/90, html.light .text-cyan-200\/80,
+html.light .text-cyan-200\/70, html.light .text-cyan-100, html.light .text-cyan-100\/90,
+html.light .text-cyan-100\/80, html.light .text-cyan-100\/70, html.light
+.hover\:text-cyan-200:hover, html.light .hover\:text-cyan-100:hover {
+  color: #155e75;
+}
+html.light .text-amber-400, html.light .text-amber-400\/90, html.light .text-amber-400\/80,
+html.light .text-amber-400\/70, html.light .text-amber-300, html.light .text-amber-300\/90,
+html.light .text-amber-300\/80, html.light .text-amber-300\/70, html.light
+.hover\:text-amber-400:hover, html.light .hover\:text-amber-300:hover {
+  color: #b45309;
+}
+html.light .text-amber-200, html.light .text-amber-200\/90, html.light .text-amber-200\/80,
+html.light .text-amber-200\/70, html.light .text-amber-100, html.light .text-amber-100\/90,
+html.light .text-amber-100\/80, html.light .text-amber-100\/70, html.light
+.hover\:text-amber-200:hover, html.light .hover\:text-amber-100:hover {
+  color: #92400e;
+}
+html.light .text-purple-400, html.light .text-purple-400\/90, html.light .text-purple-400\/80,
+html.light .text-purple-400\/70, html.light .text-purple-300, html.light .text-purple-300\/90,
+html.light .text-purple-300\/80, html.light .text-purple-300\/70, html.light
+.hover\:text-purple-400:hover, html.light .hover\:text-purple-300:hover {
+  color: #6d28d9;
+}
+html.light .text-purple-200, html.light .text-purple-200\/90, html.light .text-purple-200\/80,
+html.light .text-purple-200\/70, html.light .text-purple-100, html.light .text-purple-100\/90,
+html.light .text-purple-100\/80, html.light .text-purple-100\/70, html.light
+.hover\:text-purple-200:hover, html.light .hover\:text-purple-100:hover {
+  color: #5b21b6;
+}
+html.light .text-rose-400, html.light .text-rose-400\/90, html.light .text-rose-400\/80,
+html.light .text-rose-400\/70, html.light .text-rose-300, html.light .text-rose-300\/90,
+html.light .text-rose-300\/80, html.light .text-rose-300\/70, html.light
+.hover\:text-rose-400:hover, html.light .hover\:text-rose-300:hover {
+  color: #be123c;
+}
+html.light .text-rose-200, html.light .text-rose-200\/90, html.light .text-rose-200\/80,
+html.light .text-rose-200\/70, html.light .text-rose-100, html.light .text-rose-100\/90,
+html.light .text-rose-100\/80, html.light .text-rose-100\/70, html.light
+.hover\:text-rose-200:hover, html.light .hover\:text-rose-100:hover {
+  color: #9f1239;
+}
+html.light .text-indigo-400, html.light .text-indigo-400\/90, html.light .text-indigo-400\/80,
+html.light .text-indigo-400\/70, html.light .text-indigo-300, html.light .text-indigo-300\/90,
+html.light .text-indigo-300\/80, html.light .text-indigo-300\/70, html.light
+.hover\:text-indigo-400:hover, html.light .hover\:text-indigo-300:hover {
+  color: #4338ca;
+}
+html.light .text-indigo-200, html.light .text-indigo-200\/90, html.light .text-indigo-200\/80,
+html.light .text-indigo-200\/70, html.light .text-indigo-100, html.light .text-indigo-100\/90,
+html.light .text-indigo-100\/80, html.light .text-indigo-100\/70, html.light
+.hover\:text-indigo-200:hover, html.light .hover\:text-indigo-100:hover {
+  color: #3730a3;
+}
+html.light .text-blue-400, html.light .text-blue-400\/90, html.light .text-blue-400\/80,
+html.light .text-blue-400\/70, html.light .text-blue-300, html.light .text-blue-300\/90,
+html.light .text-blue-300\/80, html.light .text-blue-300\/70, html.light
+.hover\:text-blue-400:hover, html.light .hover\:text-blue-300:hover {
+  color: #1d4ed8;
+}
+html.light .text-blue-200, html.light .text-blue-200\/90, html.light .text-blue-200\/80,
+html.light .text-blue-200\/70, html.light .text-blue-100, html.light .text-blue-100\/90,
+html.light .text-blue-100\/80, html.light .text-blue-100\/70, html.light
+.hover\:text-blue-200:hover, html.light .hover\:text-blue-100:hover {
+  color: #1e40af;
+}
+html.light .text-orange-400, html.light .text-orange-400\/90, html.light .text-orange-400\/80,
+html.light .text-orange-400\/70, html.light .text-orange-300, html.light .text-orange-300\/90,
+html.light .text-orange-300\/80, html.light .text-orange-300\/70, html.light
+.hover\:text-orange-400:hover, html.light .hover\:text-orange-300:hover {
+  color: #c2410c;
+}
+html.light .text-orange-200, html.light .text-orange-200\/90, html.light .text-orange-200\/80,
+html.light .text-orange-200\/70, html.light .text-orange-100, html.light .text-orange-100\/90,
+html.light .text-orange-100\/80, html.light .text-orange-100\/70, html.light
+.hover\:text-orange-200:hover, html.light .hover\:text-orange-100:hover {
+  color: #9a3412;
+}
+html.light .text-red-400, html.light .text-red-400\/90, html.light .text-red-400\/80, html.light
+.text-red-400\/70, html.light .text-red-300, html.light .text-red-300\/90, html.light
+.text-red-300\/80, html.light .text-red-300\/70, html.light .hover\:text-red-400:hover,
+html.light .hover\:text-red-300:hover {
+  color: #b91c1c;
+}
+html.light .text-red-200, html.light .text-red-200\/90, html.light .text-red-200\/80, html.light
+.text-red-200\/70, html.light .text-red-100, html.light .text-red-100\/90, html.light
+.text-red-100\/80, html.light .text-red-100\/70, html.light .hover\:text-red-200:hover,
+html.light .hover\:text-red-100:hover {
+  color: #991b1b;
+}
+
+/* ---- Surfaces --------------------------------------------------------- */
+html.light :is(
+  .bg-slate-950, .bg-slate-950\/95, .bg-slate-950\/90, .bg-slate-950\/80,
+  .bg-slate-950\/70, .bg-slate-950\/60
+):not(.keep-dark) {
+  background-color: #f1f5f9;
+}
+
+html.light :is(
+  .bg-slate-900, .bg-slate-900\/95, .bg-slate-900\/90, .bg-slate-900\/80,
+  .bg-slate-900\/70
+):not(.keep-dark) {
+  background-color: #ffffff;
+}
+
+html.light :is(.bg-slate-900\/60, .bg-slate-900\/50, .bg-slate-900\/40):not(.keep-dark) {
+  background-color: #f8fafc;
+}
+
+html.light :is(.bg-slate-800, .bg-slate-800\/80, .bg-slate-800\/70):not(.keep-dark) {
+  background-color: #e2e8f0;
+}
+
+html.light .bg-slate-800\/60:not(.keep-dark) {
+  background-color: #f1f5f9;
+}
+
+html.light .bg-slate-700:not(.keep-dark) {
+  background-color: #cbd5e1;
+}
+
+/* Hover surfaces */
+html.light .hover\:bg-slate-700:hover { background-color: #cbd5e1; }
+html.light .hover\:bg-slate-800:hover { background-color: #e2e8f0; }
+html.light .hover\:bg-slate-900\/40:hover { background-color: #f1f5f9; }
+
+/* Dark tinted accent surfaces (info boxes, toasts) */
+html.light :is(.bg-cyan-950\/20, .bg-cyan-950\/25, .bg-cyan-950\/30) {
+  background-color: #ecfeff;
+}
+html.light .hover\:bg-cyan-950\/60:hover { background-color: #cffafe; }
+html.light .bg-rose-950\/30 { background-color: #fff1f2; }
+html.light .bg-emerald-950\/95 { background-color: #ecfdf5; }
+html.light .bg-rose-950\/95 { background-color: #fff1f2; }
+html.light .bg-amber-950\/95 { background-color: #fffbeb; }
+
+/* ---- Borders & dividers ------------------------------------------------ */
+html.light :is(.border-slate-800, .border-slate-700, .border-slate-600) {
+  border-color: #cbd5e1;
+}
+html.light :is(
+  .border-slate-800\/80, .border-slate-800\/70, .border-slate-800\/60,
+  .border-slate-800\/40, .border-slate-700\/80, .border-slate-700\/60,
+  .border-slate-700\/50, .border-cyan-900\/40, .border-cyan-900\/50
+) {
+  border-color: #e2e8f0;
+}
+html.light :is(.hover\:border-slate-700:hover, .hover\:border-slate-600:hover) {
+  border-color: #94a3b8;
+}
+html.light :is(.divide-slate-800\/60, .divide-slate-800) > :not(:last-child) {
+  border-color: #e2e8f0;
+}
+
+/* ---- Gradients built from dark shades ---------------------------------- */
+html.light [class~="from-emerald-900\/60"] { --tw-gradient-from: #d1fae5; }
+html.light [class~="via-teal-900\/60"]    { --tw-gradient-via: #ccfbf1; }
+html.light [class~="from-cyan-900\/60"]   { --tw-gradient-from: #cffafe; }
+html.light [class~="to-blue-900\/60"]     { --tw-gradient-to: #dbeafe; }
+html.light [class~="to-slate-900"]         { --tw-gradient-to: #f8fafc; }
+
+/* ---- Overlays ---------------------------------------------------------- */
+/* Modal backdrops stay dark frosted (login / mobile cart are full pages, not backdrops) */
+html.light .fixed.inset-0.bg-slate-950\/85:not(.glass-panel),
+html.light .fixed.inset-0.bg-slate-950\/80:not(.glass-panel),
+html.light .fixed.inset-0.bg-slate-950\/90:not(.glass-panel) {
   background-color: rgba(15, 23, 42, 0.55);
 }
 
-/* Light mode accent contrast boost so cyan/emerald/amber badges read crisply on white */
-html.light .text-emerald-400,
-html.light .text-emerald-300 {
-  color: #047857;
+/* Dark chips floating over photos keep a dark glass look */
+html.light .keep-dark {
+  background-color: rgba(2, 6, 23, 0.8);
+  color: #ffffff;
 }
-html.light .text-cyan-400,
-html.light .text-cyan-300,
-html.light .text-cyan-300\/90,
-html.light .text-cyan-300\/80 {
-  color: #0e7490;
+html.light .keep-dark.text-emerald-300 {
+  color: #6ee7b7;
 }
-html.light .text-amber-400,
-html.light .text-amber-300 {
-  color: #b45309;
-}
-html.light .text-purple-400,
-html.light .text-purple-300 {
-  color: #6d28d9;
-}
-html.light .text-rose-400,
-html.light .text-rose-300 {
-  color: #be123c;
+html.light .keep-dark.text-slate-300 {
+  color: #cbd5e1;
 }
 
 /* Print thermal receipt & reports styling */

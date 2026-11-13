@@ -24,10 +24,10 @@ export default function ProductMedia({
   const fallbackEmoji = isPharma ? '💊' : isDeli ? '🧀' : '📦';
 
   const auraClass = isPharma
-    ? 'from-cyan-500/20 via-sky-500/10 to-slate-900/60 dark:from-cyan-500/20 dark:via-blue-900/20 dark:to-slate-950/80'
+    ? 'from-cyan-400/20 via-sky-300/10 to-transparent dark:from-cyan-500/20 dark:via-blue-900/20 dark:to-slate-950/80'
     : isDeli
-    ? 'from-amber-500/20 via-orange-500/10 to-slate-900/50 dark:from-amber-500/20 dark:via-orange-950/20 dark:to-slate-950/80'
-    : 'from-emerald-500/20 via-teal-500/10 to-slate-900/50 dark:from-emerald-500/20 dark:via-teal-950/20 dark:to-slate-950/80';
+    ? 'from-amber-400/25 via-orange-300/10 to-transparent dark:from-amber-500/20 dark:via-orange-950/20 dark:to-slate-950/80'
+    : 'from-emerald-400/20 via-teal-300/10 to-transparent dark:from-emerald-500/20 dark:via-teal-950/20 dark:to-slate-950/80';
 
   const lightBackdrop = isPharma
     ? 'bg-gradient-to-br from-cyan-50 via-sky-50/80 to-slate-100 dark:from-slate-900 dark:via-slate-900/90 dark:to-slate-950'
@@ -81,8 +81,8 @@ export default function ProductMedia({
             }`}
           />
           {/* Subtle top & bottom gradient scrims so overlaid badges remain crisp on bright or dark photos */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-slate-950/60 to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-slate-950/75 via-slate-950/25 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-slate-950/25 to-transparent dark:from-slate-950/60" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-slate-950/30 via-slate-950/10 to-transparent dark:from-slate-950/75 dark:via-slate-950/25" />
         </>
       ) : (
         <div className={`relative w-full h-full flex items-center justify-center bg-gradient-to-br ${auraClass}`}>

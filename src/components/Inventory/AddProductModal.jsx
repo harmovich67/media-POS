@@ -327,7 +327,7 @@ export default function AddProductModal({ initialProduct, onClose }) {
                       </span>
                     }
                     bottomLeftOverlay={
-                      <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-slate-950/80 text-emerald-300 border border-emerald-500/40">
+                      <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-slate-950/80 keep-dark text-emerald-300 border border-emerald-500/40">
                         {formatCurrency(formData.price)}
                       </span>
                     }

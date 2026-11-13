@@ -532,7 +532,7 @@ export default function ProductGrid({
                           <button
                             type="button"
                             onClick={() => updateCartQuantity(product.id, lastEntry.selectedBatch, lastEntry.quantity - 1)}
-                            className="w-6 h-6 rounded-lg bg-slate-900/90 text-slate-200 hover:bg-rose-500 hover:text-white flex items-center justify-center transition keep-white"
+                            className="w-6 h-6 rounded-lg bg-slate-900/90 text-slate-200 hover:bg-rose-500 hover:text-white flex items-center justify-center transition"
                             title="تقليل الكمية"
                           >
                             <Minus className="w-3 h-3" />

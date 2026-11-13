@@ -162,7 +162,7 @@ export default function CameraScannerModal({ onClose, onWeightedProduct }) {
               <Barcode className="w-20 h-20 text-slate-700 opacity-40" />
             )}
             <div className="absolute inset-x-0 top-1/2 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-pulse-glow shadow-lg shadow-emerald-500" />
-            <span className="absolute bottom-2 text-[10px] text-slate-300 bg-slate-950/70 px-2 py-0.5 rounded-full font-mono">
+            <span className="absolute bottom-2 text-[10px] text-slate-300 bg-slate-950/70 keep-dark px-2 py-0.5 rounded-full font-mono">
               {cameraActive ? 'وجه الكاميرا نحو الباركود' : 'اضغط لتشغيل كاميرا الهاتف أو اختر محاكاة'}
             </span>
           </div>

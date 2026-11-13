@@ -83,7 +83,7 @@ export default function ProductDetailsModal({
             product={product}
             variant="hero"
             topRightOverlay={
-              <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-950/80 text-white border border-white/15 backdrop-blur-md keep-white">
+              <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-950/80 text-white border border-white/15 backdrop-blur-md keep-white keep-dark">
                 {product.category}
               </span>
             }

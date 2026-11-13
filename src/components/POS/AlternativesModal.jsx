@@ -38,7 +38,7 @@ export default function AlternativesModal({ targetProduct, onClose }) {
       <div className="w-full max-w-2xl glass-panel rounded-3xl border border-slate-700/80 shadow-2xl overflow-hidden flex flex-col max-h-[90dvh] animate-modal-pop">
 
         {/* Header */}
-        <div className="px-4 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-cyan-900/60 to-blue-900/60 border-b border-slate-700/60 flex items-center justify-between flex-shrink-0 keep-white">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 bg-gradient-to-r from-cyan-900/60 to-blue-900/60 border-b border-slate-700/60 flex items-center justify-between flex-shrink-0">
           <div className="flex items-center gap-3 min-w-0">
             <ProductMedia product={targetProduct} variant="thumb" className="w-10 h-10" />
             <div className="min-w-0">
